@@ -2,29 +2,28 @@ import React, {Component} from 'react';
 import Todo from "../services/Todo";
 import {getTodos} from "../services/todoService";
 import TodoItem from "./TodoItem";
-import {Row, Space} from 'antd';
+import {Row,} from 'antd';
 import TodoForm from "./TodoForm";
-import {inspect} from "util";
 import styles from "./styles.module.css"
-
-
 
 interface TodoListState {
   todos: Todo[];
-
+  loading: boolean;
 }
+
 class TodoList extends Component<any, TodoListState> {
     state = {
     todos: [],
     loading: true
   }
+
   async componentDidMount() {
       await this.loadPage();
   }
 
   loadPage = async () => {
       let todos = await getTodos();
-      this.setState( {todos, loading: false});
+      this.setState({todos, loading: false});
   }
 
     render() {
