@@ -4,7 +4,8 @@ import {getTodos} from "../services/todoService";
 import TodoItem from "./TodoItem";
 import {Row,} from 'antd';
 import TodoForm from "./TodoForm";
-import styles from "./styles.module.css"
+import {inspect} from "util";
+import style from "./style.module.css"
 
 interface TodoListState {
   todos: Todo[];
@@ -27,6 +28,7 @@ class TodoList extends Component<any, TodoListState> {
   }
 
     render() {
+        console.log("Todos", this.state.todos)
         return (
             <div>
               <h2>This is a todo list</h2>
@@ -37,8 +39,10 @@ class TodoList extends Component<any, TodoListState> {
               ) : (
                   <>
                   <TodoForm reload={this.loadPage} />
-                  <Row className={styles.todoRows}>
-                      {this.state.todos.map((todo: Todo) =>
+                  <Row className={style.todoRows}>
+                  {/*{<Row {styles.todoRows}>*!/*/}
+                      {this.state.todos &&
+                          this.state.todos.map((todo: Todo) =>
                           <TodoItem key={todo.id} todo={todo} />
                       )}
                   </Row>
