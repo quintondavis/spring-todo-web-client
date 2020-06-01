@@ -1,5 +1,7 @@
 import React from 'react';
 import { Input, Button, Form, Switch } from 'antd';
+import Todo from "../services/Todo";
+import {postTodo} from "../services/todoService";
 
 const layout = {
     labelCol: { span: 8 },
@@ -8,14 +10,23 @@ const layout = {
 const tailLayout = {
     wrapperCol: { offset: 8, span: 16 },
 };
-const TodoForm = () => {
+
+interface TodoFormInterface{
+    reload(): void;
+}
+
+const TodoForm = (props: TodoFormInterface) => {
     const [form] = Form.useForm();
-    const onFinish = (values: any) => {
+
+    const onFinish = async (values: any) => {
         console.log(values);
+        postTodo(values).then(() => props.reload());
     };
+
     const onReset = () => {
         form.resetFields();
     };
+
     return (
         <Form {...layout} form={form} name="control-hooks" onFinish={onFinish}>
             <Form.Item name="title" label="Title" rules={[{required: true}]}>
